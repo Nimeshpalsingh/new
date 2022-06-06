@@ -5,7 +5,7 @@ const session = require('express-session')
 const userdetails=require('./schema.js');
 const cors = require('cors');
 
-var uri = "mongodb://127.0.0.1:27017/citybus";
+var uri = "mongodb+srv://Nimesh123:vedant123@cluster0.s5osh.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(uri, );
 
@@ -23,12 +23,12 @@ app.get('/', (req, res)=>{
   })
   app.post("/user", async(res,req) =>{
     const user = new userdetails(res.body);
-    console.log(user);
+    // console.log(user);  
     try {
       await user.save();
-      res.send(user);
+      req.send(user);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
     }
     })
@@ -38,7 +38,7 @@ app.get('/', (req, res)=>{
         // await user.save();
         req.send(user);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
   
       }
       })
@@ -46,6 +46,7 @@ app.get('/', (req, res)=>{
   app.listen(process.env.PORT || 4000, () => {
   console.log(`🚀  Server ready at port ${process.env.PORT || 4000}`);
 });
+
 app.post("/login", async(res,req) =>{
   const user= await userdetails.findOne({mob:res.body.mob});
   if (user && user.pass===res.body.pass){
